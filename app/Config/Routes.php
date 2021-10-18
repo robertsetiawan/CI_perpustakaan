@@ -40,6 +40,7 @@ $routes->group('admin', function ($routes) {
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function($routes){
     $routes->get('list_book', 'Dashboard::getAllBookFromDatabase');
+    $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase');
 });
 
 

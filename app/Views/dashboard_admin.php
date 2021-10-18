@@ -67,6 +67,9 @@
                                 <li class="submenu-item ">
                                     <a href="<?= base_url('/dashboard/list_book') ?>">Buku</a>
                                 </li>
+                                <li class="submenu-item ">
+                                    <a href="<?= base_url('/dashboard/list_member') ?>">Anggota</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-title">Account</li>
