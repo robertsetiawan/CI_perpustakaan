@@ -23,7 +23,8 @@ class Admin extends BaseController
 
     public function index()
     {
-        return view('login_admin', ['title' => 'PERPUS|Login Admin']);
+        // return view('login_admin', ['title' => 'PERPUS|Login Admin']);
+        return view('auth-login');
     }
 
     public function register()
@@ -43,15 +44,22 @@ class Admin extends BaseController
 
             return redirect()->back()->withInput();
         } else {
-            $session = session();
 
             $login_data = [
                 'id' => $userid,
                 'username' => $name,
                 'is_logged_in' => true
             ];
+            $session = session();
 
             $session->set($login_data);
+
+            if (!$this->request->getPost('keeplogin') == true) 
+            {
+                // login 30 menit
+                // default CI session 2 jam
+                $session->markAsTempdata('is_logged_in', 1800);
+            }
 
             return redirect()->to('/dashboard');
         }

@@ -1,5 +1,7 @@
 <?php namespace App\Controllers;
 
+use App\Models\BookModel;
+
 class Dashboard extends BaseController {
     public function index()
     {
@@ -8,5 +10,12 @@ class Dashboard extends BaseController {
         $data['username'] = $session->get('username');
 
         return view('dashboard_admin', $data);
+    }
+
+    public function getAllBookFromDatabase()
+    {
+        $books = new BookModel();
+        $data['books'] = $books->findAll();
+        return view('dashboard_list_book', $data);
     }
 }
