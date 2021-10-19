@@ -122,8 +122,9 @@
                 <!-- Basic Tables start -->
                 <section class="section">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             Jquery Datatable
+                            <a href="<?= base_url('/dashboard/add_book') ?>" class="btn btn-primary">Add Book</a>
                         </div>
                         <div class="card-body">
                             <table class="table" id="table1">
