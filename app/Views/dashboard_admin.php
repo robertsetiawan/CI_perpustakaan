@@ -20,7 +20,9 @@
 
 <body>
     <div id="app">
-        <div id="sidebar" class="active">
+        <?php $sub = "null"; $side = "dashboard"; ?>
+        <?php include('dashboard_sidebar.php'); ?>
+        <!--<div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
@@ -85,7 +87,7 @@
                 </div>
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
-        </div>
+        </div>-->
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">

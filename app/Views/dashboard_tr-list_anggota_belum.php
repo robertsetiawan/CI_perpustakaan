@@ -31,6 +31,7 @@
 
 <body>
     <div id="app">
+        <?php $sub = "anggota"; $side = "database"; ?>
         <?php include('dashboard_sidebar.php'); ?>
         <div id="main">
             <header class="mb-3">
