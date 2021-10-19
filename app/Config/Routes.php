@@ -39,11 +39,15 @@ $routes->group('admin', function ($routes) {
 });
 
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
-$routes->group('dashboard', function($routes){
-    $routes->get('list_book', 'Dashboard::getAllBookFromDatabase');
+$routes->group('dashboard', function ($routes) {
+    $routes->get('list_book', 'Dashboard::getAllBookFromDatabase', ['filter' => 'auth']);
     $routes->get('avail_book', 'Dashboard::getAvailBook');
     $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
+    $routes->get('add_book', 'Dashboard::addBook', ['filter' => 'auth']);
+    $routes->add('add_book/new', 'Dashboard::newBook', ['filter' => 'auth']);
+    $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
 });
+$routes->get('/member', 'Member::index');
 
 
 /*
