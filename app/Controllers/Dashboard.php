@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BookModel;
 use App\Models\CategoryModel;
+use App\Models\MemberModel;
 
 class Dashboard extends BaseController
 {
@@ -52,5 +53,11 @@ class Dashboard extends BaseController
                 echo $path;
             }
         }
+    }
+    public function getAllMembersFromDatabase()
+    {
+        $members = new MemberModel();
+        $data['members'] = $members->findAll();
+        return view('dashboard_db-list_anggota', $data);
     }
 }
