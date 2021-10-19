@@ -18,5 +18,4 @@ class MemberModel extends Model
         'email' => 'required',
         'no_telp' => 'required',
     ];
-    protected $allowedFields = ['nama', 'password'];
 }
