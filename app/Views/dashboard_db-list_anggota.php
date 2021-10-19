@@ -31,74 +31,8 @@
 
 <body>
     <div id="app">
-        <?php $sub = "buku"; $side = "database"; ?>
+        <?php $sub = "anggota"; $side = "database"; ?>
         <?php include('dashboard_sidebar.php'); ?>
-        <!--<div id="sidebar" class="active">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header">
-                    <div class="d-flex justify-content-between">
-                        <div class="logo">
-                            <a href="index.html"><img src="/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
-                        </div>
-                        <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item">
-                            <a href="<?= base_url('/dashboard') ?>" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Transaksi</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="component-alert.html">Peminjaman</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="component-badge.html">Pengembalian</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-item active has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-collection-fill"></i>
-                                <span>Database</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item active">
-                                    <a href="<?= base_url('/dashboard/list_book') ?>">Buku</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="<?= base_url('/dashboard/list_member') ?>">Anggota</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-title">Account</li>
-
-                        <li class="sidebar-item  ">
-                            <a href="<?= base_url('/admin/logout') ?>" class='sidebar-link'>
-                                <i class="bi bi-x-circle"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-            </div>
-        </div>-->
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -110,14 +44,14 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>List Book</h3>
+                            <h3>List Anggota</h3>
                             <p class="text-subtitle text-muted">For user to check they list</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">List Book</li>
+                                    <li class="breadcrumb-item active" aria-current="page">List Anggota</li>
                                 </ol>
                             </nav>
                         </div>
@@ -127,18 +61,19 @@
                 <!-- Basic Tables start -->
                 <section class="section">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between">
+                        <div class="card-header">
                             Jquery Datatable
-                            <a href="<?= base_url('/dashboard/add_book') ?>" class="btn btn-primary">Add Book</a>
                         </div>
                         <div class="card-body">
                             <table class="table" id="table1">
                                 <thead>
                                     <tr>
-                                        <th>ISBN</th>
-                                        <th>Judul</th>
-                                        <th>Stok</th>
-                                        <th>Tersedia</th>
+                                        <th>NIM</th>
+                                        <th>Nama</th>
+                                        <th>Alamat</th>
+                                        <th>Kota</th>
+                                        <th>Email</th>
+                                        <th>No Telp</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -152,12 +87,14 @@
                                             <span class="badge bg-success">Active</span>
                                         </td>
                                     </tr> -->
-                                    <?php foreach ($books as $book) : ?>
+                                    <?php foreach ($members as $member) : ?>
                                         <tr>
-                                            <td><?= $book['isbn'] ?></td>
-                                            <td><?= $book['judul'] ?></td>
-                                            <td><?= $book['stok'] ?></td>
-                                            <td><?= $book['stok_tersedia'] ?></td>
+                                            <td><?= $member['nim'] ?></td>
+                                            <td><?= $member['nama'] ?></td>
+                                            <td><?= $member['alamat'] ?></td>
+                                            <td><?= $member['kota'] ?></td>
+                                            <td><?= $member['email'] ?></td>
+                                            <td><?= $member['no_telp'] ?></td>
                                             <td>
                                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                                                 <a href="#"><i class="bi bi-pencil"></i></a>
