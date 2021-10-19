@@ -45,6 +45,10 @@ $routes->group('dashboard', function ($routes) {
     $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
 });
 $routes->get('/member', 'Member::index');
+$routes->get('/dashboard_member', 'DashboardMember::index', ['filter' => 'authmember']);
+$routes->group('dashboard_member', function ($routes) {
+    $routes->get('list_buku', 'DashboardMember::getAllBookFromDatabase', ['filter' => 'authmember']);
+});
 
 
 /*
