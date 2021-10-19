@@ -37,9 +37,12 @@ $routes->group('admin', function ($routes) {
     $routes->add('login', 'Admin::login');
     $routes->get('logout', 'Admin::logout');
 });
+
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function($routes){
     $routes->get('list_book', 'Dashboard::getAllBookFromDatabase');
+    $routes->get('avail_book', 'Dashboard::getAvailBook');
+    $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
 });
 
 
