@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
-use App\Models\BookModel;
-use App\Models\CategoryModel;
 use App\Models\MemberModel;
 
 class Dashboard extends BaseController
