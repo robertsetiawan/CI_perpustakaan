@@ -18,4 +18,16 @@ class MemberModel extends Model
         'email' => 'required',
         'no_telp' => 'required',
     ];
+
+    function getDueBook($nim){
+        $query = $this->db->query(" SELECT b.judul, b.pengarang, p.tgl_pinjam, d.tgl_kembali, p.total_denda
+        FROM peminjaman p INNER JOIN detail_transaksi d
+        ON p.idtransaksi = d.idtransaksi INNER JOIN buku b
+        ON d.idbuku = b.idbuku 
+        WHERE p.nim = \"".$nim."\" ");
+
+        $rows = $query->getResultArray();
+                
+        return $rows;
+    }
 }

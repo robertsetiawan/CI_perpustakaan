@@ -48,7 +48,8 @@ class Admin extends BaseController
             $login_data = [
                 'id' => $userid,
                 'username' => $name,
-                'is_logged_in' => true
+                'is_logged_in' => true,
+                'is_admin' => true
             ];
             $session = session();
 

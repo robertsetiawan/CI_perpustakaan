@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Controllers;
+
+use App\Models\BookModel;
+use App\Models\CategoryModel;
 use App\Models\MemberModel;
 
 class Dashboard extends BaseController
@@ -13,6 +16,7 @@ class Dashboard extends BaseController
 
         return view('dashboard_admin', $data);
     }
+
     public function getAllMembersFromDatabase()
     {
         $members = new MemberModel();

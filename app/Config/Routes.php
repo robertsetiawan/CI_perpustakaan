@@ -47,8 +47,12 @@ $routes->group('dashboard', function ($routes) {
 });
 $routes->get('/member', 'Member::index');
 $routes->get('/dashboard_member', 'DashboardMember::index', ['filter' => 'authmember']);
+$routes->group('member', function ($routes) {
+    $routes->add('login', 'Member::login');
+    $routes->get('logout', 'Member::logout');
+});
 $routes->group('dashboard_member', function ($routes) {
-    $routes->get('list_buku', 'DashboardMember::getAllBookFromDatabase', ['filter' => 'authmember']);
+    $routes->get('list_buku', 'Book::getAllBookFromDatabase', ['filter' => 'authmember']);
 });
 
 
