@@ -48,7 +48,8 @@ class Admin extends BaseController
             $login_data = [
                 'id' => $userid,
                 'username' => $name,
-                'is_logged_in' => true
+                'is_logged_in' => true,
+                'is_admin' => true
             ];
             $session = session();
 
@@ -69,6 +70,6 @@ class Admin extends BaseController
     {
         $session = session();
         $session->destroy();
-        return redirect()->to('/admin');
+        return redirect()->to('/');
     }
 }

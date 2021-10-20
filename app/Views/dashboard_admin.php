@@ -67,7 +67,10 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="<?= base_url('/dashboard/list_book') ?>">Buku</a>
+                                    <a href="<?= base_url('/dashboard/list_book') ?>">Semua Buku</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="<?= base_url('/dashboard/avail_book') ?>">Buku Tersedia</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="<?= base_url('/dashboard/list_member') ?>">Anggota</a>
