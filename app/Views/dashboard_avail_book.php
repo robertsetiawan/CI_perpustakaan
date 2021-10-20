@@ -31,9 +31,7 @@
 
 <body>
     <div id="app">
-        <?php $sub = "buku"; $side = "database"; ?>
-        <?php include('dashboard_sidebar.php'); ?>
-        <!--<div id="sidebar" class="active">
+        <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
@@ -63,7 +61,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="component-alert.html">Peminjaman</a>
+                                    <a href="<?= base_url('/dashboard/borrowed_book'); ?>">Peminjaman</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="component-badge.html">Pengembalian</a>
@@ -83,9 +81,6 @@
                                 <li class="submenu-item active">
                                     <a href="<?= base_url('/dashboard/avail_book'); ?>">Buku Tersedia</a>
                                 </li>
-                                <li class="submenu-item ">
-                                    <a href="<?= base_url('/dashboard/list_member') ?>">Anggota</a>
-                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-title">Account</li>
@@ -101,7 +96,7 @@
                 </div>
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
-        </div>-->
+        </div>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -113,7 +108,7 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>List Book</h3>
+                            <h3>Available Book</h3>
                             <p class="text-subtitle text-muted">For user to check they list</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
@@ -130,9 +125,8 @@
                 <!-- Basic Tables start -->
                 <section class="section">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between">
+                        <div class="card-header">
                             Jquery Datatable
-                            <a href="<?= base_url('/dashboard/add_book') ?>" class="btn btn-primary">Add Book</a>
                         </div>
                         <div class="card-body">
                             <table class="table" id="table1">
