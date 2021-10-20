@@ -17,11 +17,16 @@ class Member extends BaseController
 
     public function index()
     {
+        $session = session();
         $data = [
             'validation' => \Config\Services::validation()
         ];
 
-        return view('/viewMembers/login_member', $data);
+        if ($session->get('username') != null) {
+            return redirect()->to('/dashboard_member');
+        } else {
+            return view('/viewMembers/login_member', $data);
+        }
     }
 
     public function login()
@@ -46,7 +51,7 @@ class Member extends BaseController
                     'is_admin' => false
                 ];
                 $session = session();
-                $session -> set($session_data);
+                $session->set($session_data);
                 //session()->set($session_data);
                 return redirect()->to('/dashboard_member');
             } else {
@@ -66,9 +71,9 @@ class Member extends BaseController
         return redirect()->to('/');
     }
 
-    public function removeMember($nim){
+    public function removeMember($nim)
+    {
         $this->memberModel->where('nim', $nim)->delete();
         return redirect()->to('/dashboard/list_member');
     }
-
 }
