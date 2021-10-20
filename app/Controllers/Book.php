@@ -247,10 +247,9 @@ class Book extends BaseController
         $data['books'] = $this->books->getDeletedBookByCategory($id);
         $data['total'] = count($data['books']);
 
-        if (count($data) > 5) {
-            $data = array_slice($data, 0, 4);
+        if (count($data['books']) > 5) {
+            $data['books'] = array_slice($data['books'], 0, 4);
         }
-
         return view('table_two_collumn', $data);
     }
 
