@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+$routes->get('/database', 'Home::databaseBuku');
 $routes->get('/admin', 'Admin::index');
 $routes->group('admin', function ($routes) {
     $routes->add('login', 'Admin::login');
