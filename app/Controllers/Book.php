@@ -37,12 +37,21 @@ class Book extends BaseController
         }
     }
 
-    public function getAllBookFromDatabase()
+    public function getCategoryFromDatabase()
     {
-
-        $data['books'] = $this->books->findAll();
         $data['categories'] = $this->categories->findAll();
         return view('dashboard_list_book', $data);
+    }
+
+    public function ajaxGetAllBookFromDatabase($idKategori = null)
+    {
+        if ($idKategori == null) {
+            $data['books'] = $this->books->getAllBookAndCategory();
+            return view('table', $data);
+        } else {
+            $data['books'] = $this->books->getAllBookAndCategoryById($idKategori);
+            return view('table', $data);
+        }
     }
 
     public function addBook()
@@ -139,13 +148,105 @@ class Book extends BaseController
         }
     }
 
-    public function addNewCategory()
+    public function editBook($idbuku)
     {
-        if (!empty($this->request->getPost('kategori'))) {
-            $this->categories->insert(['nama' => $this->request->getPost('kategori')]);
-            return redirect()->to('/dashboard/list_book');
+        $data['book'] = $this->books->where('idbuku', $idbuku)->first();
+        $data['categories'] = $this->categories->findAll();
+        return view('dashboard_edit_book', $data);
+    }
+
+    public function confirmUpdate($idbuku)
+    {
+        $validation = \Config\Services::validation();
+
+        $validation->setRules($this->books->validationRules, $this->books->errorMessage);
+
+        $isValid = $validation->withRequest($this->request)->run(); //validasi semua input kecuali gambar dan id kategori
+
+        if ($this->request->getFile('gambarbuku')->isValid())  //validasi apakah user input gambar baru
+        {
+            if (!$this->validate([ //validasi type dan ukuran gambar
+                'gambarbuku' => [
+                    'rules' => 'uploaded[gambarbuku]|mime_in[gambarbuku,image/jpg,image/jpeg,image/png]|max_size[gambarbuku,2048]',
+                    'errors' => [
+                        'uploaded' => 'Harus Ada File yang diupload',
+                        'mime_in' => 'Format File Harus Berupa jpg,jpeg,png',
+                        'max_size' => 'Ukuran File Maksimal 2 MB'
+                    ]
+                ]
+            ])) {
+                session()->setFlashdata('error_image_1', $this->validator->getError('gambarbuku'));
+
+                $isValid = false;
+            }
+
+            if ($isValid) {
+                $file = $this->request->getFile('gambarbuku');
+
+                $fileName = $file->getRandomName();
+
+                $file->move(ROOTPATH . 'public/uploads/', $fileName);
+
+                $data = [
+                    'isbn' => $this->request->getPost('isbn'),
+                    'judul' => $this->request->getPost('judul'),
+                    'idkategori' => $this->request->getPost('idkategori'),
+                    'pengarang' => $this->request->getPost('pengarang'),
+                    'penerbit' => $this->request->getPost('penerbit'),
+                    'kota_terbit' => $this->request->getPost('kota_terbit'),
+                    'editor' => $this->request->getPost('editor'),
+                    'file_gambar' => $fileName,
+                    'tgl_update' => date("Y-m-d"),
+                    'stok' => $this->request->getPost('stok'),
+                    'stok_tersedia' => $this->request->getPost('stok'),
+                ];
+                $this->books->update($idbuku, $data);
+
+                return redirect()->to('/dashboard/list_book');
+            }
         } else {
-            return redirect()->back();
+
+            if ($isValid) {
+                $data = [
+                    'isbn' => $this->request->getPost('isbn'),
+                    'judul' => $this->request->getPost('judul'),
+                    'idkategori' => $this->request->getPost('idkategori'),
+                    'pengarang' => $this->request->getPost('pengarang'),
+                    'penerbit' => $this->request->getPost('penerbit'),
+                    'kota_terbit' => $this->request->getPost('kota_terbit'),
+                    'editor' => $this->request->getPost('editor'),
+                    'tgl_update' => date("Y-m-d"),
+                    'stok' => $this->request->getPost('stok'),
+                    'stok_tersedia' => $this->request->getPost('stok'),
+                ];
+                $this->books->update($idbuku, $data);
+
+                return redirect()->to('/dashboard/list_book');
+            }
         }
+
+        $this->generateErrorToView($validation);
+
+        return redirect()->back()->withInput();
+    }
+
+    public function deleteBook($idbuku)
+    {
+        $this->books->where('idbuku', $idbuku)->delete();
+        return redirect()->to('/dashboard/list_book');
+    }
+
+    public function ajaxAddNewCategory()
+    {
+        $this->categories->insert(['nama' => $this->request->getPost('kategori')]);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajaxEditCategory($idKategori)
+    {
+        $this->categories->update($idKategori, ['nama' => $this->request->getPost('kategori')]);
+
+        echo json_encode(array("status" => TRUE));
     }
 }
