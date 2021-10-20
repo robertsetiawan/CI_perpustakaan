@@ -45,6 +45,13 @@ class BookModel extends Model
         ]
     ];
 
+    public function getAvailableBookAndCategory()
+    {
+        $query = $this->db->query("SELECT * FROM buku b INNER JOIN kategori k ON b.idkategori = k.idKategori WHERE b.stok_tersedia > 0;");
+
+        return $query->getResultArray();
+    }
+
     public function getAllBookAndCategory()
     {
         $query = $this->db->query("SELECT * FROM buku b INNER JOIN kategori k ON b.idkategori = k.idKategori;");
@@ -55,6 +62,13 @@ class BookModel extends Model
     public function getAllBookAndCategoryById($id)
     {
         $query = $this->db->query("SELECT * FROM buku b INNER JOIN kategori k ON b.idkategori = k.idKategori WHERE k.idKategori=" . $id . ";");
+
+        return $query->getResultArray();
+    }
+
+    public function getDeletedBookByCategory($id)
+    {
+        $query = $this->db->query("SELECT b.judul, k.nama FROM buku b INNER JOIN kategori k ON b.idkategori = k.idKategori WHERE k.idKategori=" . $id . ";");
 
         return $query->getResultArray();
     }
