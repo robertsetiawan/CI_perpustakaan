@@ -1,8 +1,10 @@
-<?php namespace App\Controllers;
+<?php
 
-use App\Models\BookModel;
+namespace App\Controllers;
+use App\Models\MemberModel;
 
-class Dashboard extends BaseController {
+class Dashboard extends BaseController
+{
     public function index()
     {
         $session = session();
@@ -11,11 +13,10 @@ class Dashboard extends BaseController {
 
         return view('dashboard_admin', $data);
     }
-
-    public function getAllBookFromDatabase()
+    public function getAllMembersFromDatabase()
     {
-        $books = new BookModel();
-        $data['books'] = $books->findAll();
-        return view('dashboard_list_book', $data);
+        $members = new MemberModel();
+        $data['members'] = $members->findAll();
+        return view('dashboard_db-list_anggota', $data);
     }
 }
