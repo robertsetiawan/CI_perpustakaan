@@ -250,7 +250,6 @@ class Book extends BaseController
         if (count($data['books']) > 5) {
             $data['books'] = array_slice($data['books'], 0, 4);
         }
-
         return view('table_two_collumn', $data);
     }
 
