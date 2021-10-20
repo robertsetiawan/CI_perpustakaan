@@ -13,6 +13,7 @@ class Dashboard extends BaseController
 
         return view('dashboard_admin', $data);
     }
+
     public function getAllMembersFromDatabase()
     {
         $members = new MemberModel();
