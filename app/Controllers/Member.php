@@ -63,6 +63,12 @@ class Member extends BaseController
     {
         $session = session();
         $session->destroy();
-        return redirect()->to('/member');
+        return redirect()->to('/');
     }
+
+    public function removeMember($nim){
+        $this->memberModel->where('nim', $nim)->delete();
+        return redirect()->to('/dashboard/list_member');
+    }
+
 }

@@ -46,6 +46,7 @@ $routes->group('dashboard', function ($routes) {
     $routes->add('add_category', 'Book::addNewCategory', ['filter' => 'auth']);
     $routes->get('member/register', 'Register::index', ['filter' => 'auth']);
     $routes->add('member/register/process', 'Register::process', ['filter' => 'auth']);
+    $routes->add('member/delete/(:segment)', 'Member::removeMember/$1', ['filter' => 'auth']);
 });
 $routes->get('/member', 'Member::index');
 $routes->get('/dashboard_member', 'DashboardMember::index', ['filter' => 'authmember']);

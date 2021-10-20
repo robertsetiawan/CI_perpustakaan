@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controllers;
 
-use App\Models\UsersModel;
+use App\Models\MemberModel;
 
 class Register extends BaseController
 {
@@ -77,7 +77,7 @@ class Register extends BaseController
             session()->setFlashdata('error', $this->validator->listErrors());
             return redirect()->back()->withInput();
         }
-        $users = new UsersModel();
+        $users = new MemberModel();
         $users->insert([
             'nim' => $this->request->getVar('nim'),
             'nama' => $this->request->getVar('nama'),
@@ -87,6 +87,6 @@ class Register extends BaseController
             'no_telp' => $this->request->getVar('no_telp'),
             'password' => md5($this->request->getVar('password')),
         ]);
-        return redirect()->to('/login');
+        return redirect()->to("/dashboard/list_member");
     }
 }
