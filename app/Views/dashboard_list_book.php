@@ -179,8 +179,38 @@
                                                     <div id="<?= "action_kategori_" . $category['nama'] ?>">
                                                         <a onclick=<?= "\"setupEdit(" . $category['idKategori'] . ",'" . $category['nama'] . "')\"" ?> href="#"><i class="bi bi-pencil"></i></a>
 
+                                                        <a onclick=<?= "\"ajaxGetDeletedBooksByCategory(" . $category['idKategori'] . ",'delete-category-modal-" . str_replace(' ', '-', $category['nama']) . "')\"" ?> href="#"><i id="delete-category-button" class="bi bi-trash" data-bs-toggle="modal" data-bs-target="<?= '#delete_' . str_replace(' ', '_', $category['nama']) ?>"></i></a>
 
-                                                        <a href="#"><i class="bi bi-trash"></i></a>
+                                                        <!--Basic Modal -->
+                                                        <div class="modal fade text-left" id="<?= 'delete_' . str_replace(' ', '_', $category['nama']) ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="myModalLabel1">Konfirmasi Hapus "<?= $category['nama'] ?>"?</h5>
+                                                                        <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+                                                                            <i data-feather="x"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>
+                                                                            Apa anda yakin untuk menghapus kategori ini?<br>
+                                                                            Daftar buku berikut akan dihapus dan <u>tidak bisa dipulihkan kembali.</u>
+                                                                        </p>
+                                                                        <div id="<?= "delete-category-modal-" . str_replace(' ', '-', $category['nama']) ?>"></div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn" data-bs-dismiss="modal">
+                                                                            <i class="bx bx-x d-block d-sm-none"></i>
+                                                                            <span class="d-none d-sm-block">Close</span>
+                                                                        </button>
+                                                                        <a href="" class="btn btn-danger ml-1" data-bs-dismiss="modal">
+                                                                            <i class="bx bx-check d-block d-sm-none"></i>
+                                                                            <span class="d-none d-sm-block">Confirm</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </li>
                                             <?php endforeach ?>
@@ -219,6 +249,39 @@
             ajaxGetAllBookFromDatabaseByIdKategori()
         });
 
+        $("#pilih-kategori").change(function() {
+            if ($("#pilih-kategori").val() == "all") {
+                ajaxGetAllBookFromDatabaseByIdKategori();
+            } else {
+                ajaxGetAvailableBookFromDatabase();
+            }
+        });
+
+        function ajaxGetDeletedBooksByCategory(idKategori, target) {
+            $.ajax({
+                url: "<?= base_url('/dashboard/list_deleted_books_by_category') ?>/" + idKategori,
+                success: function(data) {
+                    $('#'+ target).html(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error fecthing data');
+                }
+            });
+        }
+
+
+        function ajaxGetAvailableBookFromDatabase() {
+            $.ajax({
+                url: "<?= base_url('/dashboard/list_available_book') ?>",
+                success: function(data) {
+                    $('#table-ajax').html(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error fecthing data');
+                }
+            })
+        }
+
         function resetActiveCategory() {
             var category_list = document.querySelectorAll(".list-group-item")
             category_list.forEach(function(element) {
@@ -237,12 +300,11 @@
 
                 $("#dropdown-filter").show()
 
-                $("#all-filter").attr('selected', true);
+                $("#dropdown-filter option[value=all]").prop("selected", true)
 
             } else {
                 url = "<?= base_url('/dashboard/list_book_by_category') ?>/" + idKategori;
 
-                // document.getElementById(idKategori).classList.add("active");
                 $("#" + idKategori).addClass("active");
 
                 $("#dropdown-filter").hide()
