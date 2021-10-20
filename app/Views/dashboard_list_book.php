@@ -31,7 +31,8 @@
 
 <body>
     <div id="app">
-        <?php $sub = "buku"; $side = "database"; ?>
+        <?php $sub = "buku";
+        $side = "database"; ?>
         <?php include('dashboard_sidebar.php'); ?>
         <!--<div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
@@ -126,50 +127,67 @@
 
                 <!-- Basic Tables start -->
                 <section class="section">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-                            Jquery Datatable
-                            <a href="<?= base_url('/dashboard/add_book') ?>" class="btn btn-primary">Add Book</a>
+                    <div class="row">
+                        <div class="col-md-8 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="btn-group mb-1">
+                                        <div class="dropdown" id="dropdown-filter">
+                                            <select class="form-select" aria-label="Default select example" id="pilih-kategori" name="idkategori">
+                                                <option id="all-filter" value="all">Semua</option>
+                                                <option id="available-filter" value="available">Tersedia</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <a href="<?= base_url('/dashboard/add_book') ?>" class="btn btn-primary">Add Book</a>
+                                </div>
+                                <div id="table-ajax" class="card-body">
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <table class="table" id="table1">
-                                <thead>
-                                    <tr>
-                                        <th>ISBN</th>
-                                        <th>Judul</th>
-                                        <th>Stok</th>
-                                        <th>Tersedia</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- <tr>
-                                        <td>Graiden</td>
-                                        <td>vehicula.aliquet@semconsequat.co.uk</td>
-                                        <td>076 4820 8838</td>
-                                        <td>Offenburg</td>
-                                        <td>
-                                            <span class="badge bg-success">Active</span>
-                                        </td>
-                                    </tr> -->
-                                    <?php foreach ($books as $book) : ?>
-                                        <tr>
-                                            <td><?= $book['isbn'] ?></td>
-                                            <td><?= $book['judul'] ?></td>
-                                            <td><?= $book['stok'] ?></td>
-                                            <td><?= $book['stok_tersedia'] ?></td>
-                                            <td>
-                                                <a href="#"><i class="bi bi-info-circle"></i></a>
-                                                <a href="#"><i class="bi bi-pencil"></i></a>
-                                                <a href="#"><i class="bi bi-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
-                            </table>
+                        <div class="col-md-4 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Daftar Kategori Buku</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col mb-1">
+                                                <form action="#" method="POST" id="add-category-form">
+                                                    <div class="input-group mb-3">
+                                                        <input id="kategori" class="form-control" placeholder="Tambah Kategori" name="kategori">
+                                                        <button class="btn btn-primary" onclick="ajaxAddCategory()" type="button" id="add-category-button">Tambah</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                        <ul class="list-group" id="list-kategori" style="cursor: pointer;">
+                                            <li id="default-category" class="active list-group-item d-flex justify-content-between align-items-center" onclick="ajaxGetAllBookFromDatabaseByIdKategori()">
+                                                <span>Semua Kategori</span>
+                                            </li>
+                                            <?php foreach ($categories as $category) : ?>
+                                                <li id="<?= $category['idKategori'] ?>" class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div onclick=<?= "\"ajaxGetAllBookFromDatabaseByIdKategori(" . $category['idKategori'] . ")\"" ?>>
+                                                        <span><?= $category['nama'] ?></span>
+                                                    </div>
+                                                    <div id="<?= "action_kategori_" . $category['nama'] ?>">
+                                                        <a onclick=<?= "\"setupEdit(" . $category['idKategori'] . ",'" . $category['nama'] . "')\"" ?> href="#"><i class="bi bi-pencil"></i></a>
+
+
+                                                        <a href="#"><i class="bi bi-trash"></i></a>
+                                                    </div>
+                                                </li>
+                                            <?php endforeach ?>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </section>
                 <!-- Basic Tables end -->
             </div>
@@ -194,8 +212,94 @@
     <script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
     <script src="/assets/vendors/fontawesome/all.min.js"></script>
     <script>
-        // Jquery Datatable
-        let jquery_datatable = $("#table1").DataTable()
+        $(function() {
+            ajaxGetAllBookFromDatabaseByIdKategori()
+        });
+
+        function resetActiveCategory() {
+            var category_list = document.querySelectorAll(".list-group-item")
+            category_list.forEach(function(element) {
+                element.classList.remove('active')
+            })
+        }
+
+        function ajaxGetAllBookFromDatabaseByIdKategori(idKategori = null) {
+
+            resetActiveCategory();
+
+            if (idKategori == null) {
+                url = "<?= base_url('/dashboard/list_book_by_category') ?>/";
+
+                $("#default-category").addClass("active");
+
+                $("#dropdown-filter").show()
+
+                $("#all-filter").attr('selected', true);
+
+            } else {
+                url = "<?= base_url('/dashboard/list_book_by_category') ?>/" + idKategori;
+
+                // document.getElementById(idKategori).classList.add("active");
+                $("#" + idKategori).addClass("active");
+
+                $("#dropdown-filter").hide()
+            }
+            $.ajax({
+                url: url,
+                success: function(data) {
+                    $('#table-ajax').html(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error fecthing data');
+                }
+            })
+        }
+
+        function ajaxAddCategory() {
+            if ($('#kategori').val() != "") {
+                $.ajax({
+                    url: "<?= base_url('/dashboard/add_category') ?>",
+                    type: "POST",
+                    data: $('#add-category-form').serialize(),
+                    dataType: "JSON",
+                    success: function(data) {
+                        location.reload()
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Error updating data');
+                    }
+                })
+            }
+        }
+
+        function setupEdit(id, name) {
+            if ($('#kategori').val() == "") {
+                $('#kategori').val(name);
+                $('#kategori').attr("placeholder", "Edit " + name)
+                $(id).remove();
+                $('#add-category-button').text('Edit');
+                $('#add-category-button').click(function() {
+                    if ($('#kategori').val() != "") {
+                        ajaxEditCategory(id);
+                    }
+                });
+            }
+        }
+
+        function ajaxEditCategory(idKategori) {
+            $.ajax({
+                url: "<?= base_url('/dashboard/edit_category') ?>/" + idKategori,
+                type: "POST",
+                data: $('#add-category-form').serialize(),
+                dataType: "JSON",
+                success: function(data) {
+                    location.reload()
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error updating data');
+                }
+            })
+        }
     </script>
 
     <script src="/assets/js/mazer.js"></script>

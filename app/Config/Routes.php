@@ -39,11 +39,16 @@ $routes->group('admin', function ($routes) {
 });
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
-    $routes->get('list_book', 'Book::getAllBookFromDatabase', ['filter' => 'auth']);
+    $routes->get('list_book', 'Book::getCategoryFromDatabase', ['filter' => 'auth']);
     $routes->get('add_book', 'Book::addBook', ['filter' => 'auth']);
     $routes->add('add_book/new', 'Book::newBook', ['filter' => 'auth']);
+    $routes->get('edit_book/(:any)', 'Book::editBook/$1');
+    $routes->get('delete_book/(:segment)/confirm', 'Book::deleteBook/$1');
+    $routes->add('edit_book/(:segment)/save', 'Book::confirmUpdate/$1');
     $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
-    $routes->add('add_category', 'Book::addNewCategory', ['filter' => 'auth']);
+    $routes->add('add_category', 'Book::ajaxAddNewCategory', ['filter' => 'auth']);
+    $routes->add('edit_category/(:any)', 'Book::ajaxEditCategory/$1', ['filter' => 'auth']);
+    $routes->get('list_book_by_category/(:any)', 'Book::ajaxGetAllBookFromDatabase/$1', ['filter' => 'auth']);
 });
 $routes->get('/member', 'Member::index');
 
