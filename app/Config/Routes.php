@@ -31,7 +31,7 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Admin::index');
+$routes->get('/', 'Home::index');
 $routes->get('/admin', 'Admin::index');
 $routes->group('admin', function ($routes) {
     $routes->add('login', 'Admin::login');
@@ -40,14 +40,26 @@ $routes->group('admin', function ($routes) {
 
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
-    $routes->get('list_book', 'Dashboard::getAllBookFromDatabase', ['filter' => 'auth']);
     $routes->get('avail_book', 'Dashboard::getAvailBook');
     $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
-    $routes->get('add_book', 'Dashboard::addBook', ['filter' => 'auth']);
-    $routes->add('add_book/new', 'Dashboard::newBook', ['filter' => 'auth']);
+    $routes->get('list_book', 'Book::getAllBookFromDatabase', ['filter' => 'auth']);
+    $routes->get('add_book', 'Book::addBook', ['filter' => 'auth']);
+    $routes->add('add_book/new', 'Book::newBook', ['filter' => 'auth']);
     $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
+    $routes->add('add_category', 'Book::addNewCategory', ['filter' => 'auth']);
+    $routes->get('member/register', 'Register::index', ['filter' => 'auth']);
+    $routes->add('member/register/process', 'Register::process', ['filter' => 'auth']);
+    $routes->add('member/delete/(:segment)', 'Member::removeMember/$1', ['filter' => 'auth']);
 });
 $routes->get('/member', 'Member::index');
+$routes->get('/dashboard_member', 'DashboardMember::index', ['filter' => 'authmember']);
+$routes->group('member', function ($routes) {
+    $routes->add('login', 'Member::login');
+    $routes->get('logout', 'Member::logout');
+});
+$routes->group('dashboard_member', function ($routes) {
+    $routes->get('list_buku', 'Book::getAllBookFromDatabase', ['filter' => 'authmember']);
+});
 
 
 /*

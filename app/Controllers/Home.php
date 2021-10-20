@@ -6,6 +6,6 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('login_admin', ['title' => 'Coba']);
+        return view('home_page');
     }
 }
