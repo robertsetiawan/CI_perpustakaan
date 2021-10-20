@@ -38,8 +38,10 @@ $routes->group('admin', function ($routes) {
     $routes->get('logout', 'Admin::logout');
 });
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
-$routes->group('dashboard', function($routes){
+$routes->group('dashboard', function ($routes) {
     $routes->get('list_book', 'Dashboard::getAllBookFromDatabase');
+    $routes->get('member/register', 'Register::index', ['filter' => 'auth']);
+    $routes->add('member/register/process', 'Register::process', ['filter' => 'auth']);
 });
 
 
