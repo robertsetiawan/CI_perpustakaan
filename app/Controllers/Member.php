@@ -47,11 +47,11 @@ class Member extends BaseController
                 session()->set($session_data);
                 return redirect()->to('/index.html');
             } else {
-                session()->setFlashdata('error_login', 'Username atau password ditemukan');
+                session()->setFlashdata('error_login', 'Username atau password tidak ditemukan');
                 return redirect()->to('/member');
             }
         } else {
-            session()->setFlashdata('error_login', 'Username atau password ditemukan');
+            session()->setFlashdata('error_login', 'Username atau password tidak ditemukan');
             return redirect()->to('/member');
         }
     }
