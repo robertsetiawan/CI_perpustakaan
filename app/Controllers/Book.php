@@ -43,6 +43,12 @@ class Book extends BaseController
         return view('dashboard_list_book', $data);
     }
 
+    public function ajaxGetAvailableBookFromDatabase()
+    {
+        $data['books'] = $this->books->getAvailableBookAndCategory();
+        return view('table', $data);
+    }
+
     public function ajaxGetAllBookFromDatabase($idKategori = null)
     {
         if ($idKategori == null) {
@@ -234,6 +240,18 @@ class Book extends BaseController
     {
         $this->books->where('idbuku', $idbuku)->delete();
         return redirect()->to('/dashboard/list_book');
+    }
+
+    public function ajaxGetDeletedBooksByCategory($id)
+    {
+        $data['books'] = $this->books->getDeletedBookByCategory($id);
+        $data['total'] = count($data['books']);
+
+        if (count($data) > 5) {
+            $data = array_slice($data, 0, 4);
+        }
+
+        return view('table_two_collumn', $data);
     }
 
     public function ajaxAddNewCategory()

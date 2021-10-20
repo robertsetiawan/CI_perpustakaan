@@ -40,14 +40,15 @@ $routes->group('admin', function ($routes) {
 
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
-    $routes->get('avail_book', 'Dashboard::getAvailBook');
+    $routes->get('list_available_book', 'Book::ajaxGetAvailableBookFromDatabase');
     $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
     $routes->get('list_book', 'Book::getCategoryFromDatabase', ['filter' => 'auth']);
     $routes->get('add_book', 'Book::addBook', ['filter' => 'auth']);
     $routes->add('add_book/new', 'Book::newBook', ['filter' => 'auth']);
-    $routes->get('edit_book/(:any)', 'Book::editBook/$1');
-    $routes->get('delete_book/(:segment)/confirm', 'Book::deleteBook/$1');
-    $routes->add('edit_book/(:segment)/save', 'Book::confirmUpdate/$1');
+    $routes->get('list_deleted_books_by_category/(:any)', 'Book::ajaxGetDeletedBooksByCategory/$1', ['filter' => 'auth']);
+    $routes->get('edit_book/(:any)', 'Book::editBook/$1', ['filter' => 'auth']);
+    $routes->get('delete_book/(:segment)/confirm', 'Book::deleteBook/$1', ['filter' => 'auth']);
+    $routes->add('edit_book/(:segment)/save', 'Book::confirmUpdate/$1', ['filter' => 'auth']);
     $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
     $routes->get('member/register', 'Register::index', ['filter' => 'auth']);
     $routes->add('member/register/process', 'Register::process', ['filter' => 'auth']);
