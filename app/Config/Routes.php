@@ -41,11 +41,13 @@ $routes->group('admin', function ($routes) {
 
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
-    $routes->get('list_available_book', 'Book::ajaxGetAvailableBookFromDatabase');
-    $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
+    $routes->get('list_available_book', 'Book::ajaxGetAvailableBookFromDatabase', ['filter' => 'auth']);
+    $routes->get('borrowed_book', 'Dashboard::getBorrowedBook', ['filter' => 'auth']);
+    $routes->get('borrowed_book/add', 'Dashboard::addBorrowedBook', ['filter' => 'auth']);
+    $routes->add('borrowed_book/process', 'Dashboard::processBorrowedBook', ['filter' => 'auth']);
     // $routes->get('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3'); // new
-    $routes->PUT('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3');
-    $routes->get('returned_book', 'Dashboard::getReturnedBook');
+    $routes->PUT('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3', ['filter' => 'auth']);
+    $routes->get('returned_book', 'Dashboard::getReturnedBook', ['filter' => 'auth']);
     
     $routes->get('list_book', 'Book::getCategoryFromDatabase', ['filter' => 'auth']);
     $routes->get('add_book', 'Book::addBook', ['filter' => 'auth']);

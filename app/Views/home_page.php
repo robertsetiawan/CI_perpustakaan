@@ -111,7 +111,11 @@
                                 <div class = "row">
                                     <?php if (count($books) > 0) :?>
                                         <!-- Disini iterasi tiap card buku pinjaman -->
-                                        <?php for ($x = 0; $x < $count; $x++) : 
+                                        <?php
+                                        if (count($books)<$count){
+                                            $count = count($books);
+                                        } 
+                                        for ($x = 0; $x < $count; $x++) : 
                                             $book = $books[$x];?>
                                         <div class="col-xl-3 col-md-6 col-sm-12">
                                             <div class="card">
