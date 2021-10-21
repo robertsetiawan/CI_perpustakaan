@@ -62,6 +62,7 @@ $routes->group('dashboard', function ($routes) {
     $routes->add('member/delete/(:segment)', 'Member::removeMember/$1', ['filter' => 'auth']);
     $routes->add('add_category', 'Book::ajaxAddNewCategory', ['filter' => 'auth']);
     $routes->add('edit_category/(:any)', 'Book::ajaxEditCategory/$1', ['filter' => 'auth']);
+    $routes->add('delete_category/(:any)', 'Book::ajaxDeleteCategory/$1', ['filter' => 'auth']);
     $routes->get('list_book_by_category/(:any)', 'Book::ajaxGetAllBookFromDatabase/$1', ['filter' => 'auth']);
   
 });
