@@ -28,10 +28,10 @@
                     </a>
                     <ul class="submenu ">
                         <li <?php if ($sub=="peminjaman"){ echo "class="."\"submenu-item active\""; }else{echo "class="."\"submenu-item \"";}?>>
-                            <a href="component-alert.html">Peminjaman</a>
+                            <a href="<?= base_url('/dashboard/borrowed_book'); ?>">Peminjaman</a>
                         </li>
                         <li <?php if ($sub=="pengembalian"){ echo "class="."\"submenu-item active\""; }else{echo "class="."\"submenu-item \"";}?>>
-                            <a href="component-badge.html">Pengembalian</a>
+                            <a href="<?= base_url('/dashboard/returned_book'); ?>">Pengembalian</a>
                         </li>
                     </ul>
                 </li>

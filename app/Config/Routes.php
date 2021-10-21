@@ -43,6 +43,10 @@ $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
     $routes->get('list_available_book', 'Book::ajaxGetAvailableBookFromDatabase');
     $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
+    // $routes->get('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3'); // new
+    $routes->PUT('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3');
+    $routes->get('returned_book', 'Dashboard::getReturnedBook');
+    
     $routes->get('list_book', 'Book::getCategoryFromDatabase', ['filter' => 'auth']);
     $routes->get('add_book', 'Book::addBook', ['filter' => 'auth']);
     $routes->add('add_book/new', 'Book::newBook', ['filter' => 'auth']);
