@@ -43,9 +43,13 @@ $routes->group('dashboard', function ($routes) {
     $routes->get('list_book', 'Dashboard::getAllBookFromDatabase', ['filter' => 'auth']);
     $routes->get('avail_book', 'Dashboard::getAvailBook');
     $routes->get('borrowed_book', 'Dashboard::getBorrowedBook');
+    // $routes->get('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3'); // new
+    $routes->PUT('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3');
     $routes->get('add_book', 'Dashboard::addBook', ['filter' => 'auth']);
     $routes->add('add_book/new', 'Dashboard::newBook', ['filter' => 'auth']);
     $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
+    $routes->get('returned_book', 'Dashboard::getReturnedBook');
+    
 });
 $routes->get('/member', 'Member::index');
 

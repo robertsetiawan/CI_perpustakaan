@@ -102,6 +102,8 @@ class Dashboard extends BaseController
             $trans->updateTransactionFine($idtransaksi, $idbuku);
         }
 
+        session()->setFlashdata('pesan', 'idbuku: ' .$idbuku);
+
         return redirect()->to(base_url('dashboard/borrowed_book'));
     }
 }
