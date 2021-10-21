@@ -8,11 +8,10 @@ class TransaksiModel extends Model
 {
     protected $table = 'detail_transaksi';
     protected $primaryKey = ['idtransaksi', 'idbuku'];
-    protected $allowedFields = ['tgl_kembali', 'denda'];
+    protected $allowedFields = ['idtransaksi','idbuku','tgl_kembali', 'denda'];
 
     protected $validationRules = [
         'denda' => 'required',
-        'tgl_kembali' => 'required',
     ];
 
     public function getAllTransaction()
@@ -51,6 +50,25 @@ class TransaksiModel extends Model
         $this->db->query('UPDATE buku SET stok_tersedia = stok_tersedia + 1 WHERE idbuku = ' . $idbuku);
 
         $this->db->query('UPDATE peminjaman SET total_denda = (SELECT SUM(denda) FROM detail_transaksi WHERE idtransaksi = ' . $idtransaksi . ' GROUP BY idtransaksi) WHERE idtransaksi = ' . $idtransaksi);
+
+        if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
+        } else {
+            $this->db->transCommit();
+        }
+        // test
+    }
+
+    public function insertBorrowedBook($idtransaksi, $nim, $idpetugas, $books)
+    {
+        $this->db->transBegin();
+
+        $this->db->query('INSERT INTO peminjaman (idtransaksi, nim, tgl_pinjam, total_denda, idpetugas) VALUES ('.$idtransaksi.', '.$nim.', NOW(), 0, '.$idpetugas.') ');
+        
+        foreach ($books as $id){
+            $this->db->query('INSERT INTO detail_transaksi (idtransaksi, idbuku, tgl_kembali, denda) VALUES ('.$idtransaksi.', '.$id.', NULL, 0) ');
+            $this->db->query('UPDATE buku SET stok_tersedia = stok_tersedia - 1 WHERE idbuku = ' . $id);
+        }
 
         if ($this->db->transStatus() === false) {
             $this->db->transRollback();

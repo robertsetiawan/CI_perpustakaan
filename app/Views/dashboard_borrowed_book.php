@@ -63,8 +63,13 @@
                 <!-- Basic Tables start -->
                 <section class="section">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between" >
                             Jquery Datatable
+                            <a href="<?= base_url('/dashboard/borrowed_book/add') ?>">
+                            <button type="button" class="btn btn-primary">
+                                Pinjam Buku
+                            </button>
+                            </a>
                         </div>
 
                         <div class="card-body">
