@@ -76,4 +76,11 @@ class Member extends BaseController
         $this->memberModel->where('nim', $nim)->delete();
         return redirect()->to('/dashboard/list_member');
     }
+
+    public function getAllMembersFromDatabase()
+    {
+        $members = new MemberModel();
+        $data['members'] = $members->findAll();
+        return view('viewAdmin/dashboard_db-list_anggota', $data);
+    }
 }

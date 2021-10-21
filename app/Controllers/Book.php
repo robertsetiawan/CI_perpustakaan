@@ -40,23 +40,23 @@ class Book extends BaseController
     public function getCategoryFromDatabase()
     {
         $data['categories'] = $this->categories->findAll();
-        return view('dashboard_list_book', $data);
+        return view('viewAdmin/dashboard_list_book', $data);
     }
 
     public function ajaxGetAvailableBookFromDatabase()
     {
         $data['books'] = $this->books->getAvailableBookAndCategory();
-        return view('table', $data);
+        return view('viewAdmin/table', $data);
     }
 
-    public function ajaxGetAllBookFromDatabase($idKategori = null)
+    public function ajaxGetAllBookFromDatabase($idKategori = 0)
     {
-        if ($idKategori == null) {
+        if ($idKategori == 0) {
             $data['books'] = $this->books->getAllBookAndCategory();
-            return view('table', $data);
+            return view('viewAdmin/table', $data);
         } else {
             $data['books'] = $this->books->getAllBookAndCategoryById($idKategori);
-            return view('table', $data);
+            return view('viewAdmin/table', $data);
         }
     }
 
@@ -64,7 +64,7 @@ class Book extends BaseController
     {
 
         $data['categories'] = $this->categories->findAll();
-        return view('dashboard_add_book', $data);
+        return view('viewAdmin/dashboard_add_book', $data);
     }
 
     public function newBook()
@@ -110,7 +110,7 @@ class Book extends BaseController
 
             $fileName = $file->getRandomName();
 
-            $file->move(ROOTPATH . 'public/uploads/', $fileName);
+            $file->move(ROOTPATH . 'public_html/uploads/', $fileName);
             if ($this->request->getPost('idkategori') == 'lainnya' && !empty($this->request->getPost('input-kategori'))) {
                 $idkategori = $this->categories->insert(['nama' => $this->request->getPost('input-kategori')], true);
                 $data = [
@@ -158,7 +158,7 @@ class Book extends BaseController
     {
         $data['book'] = $this->books->where('idbuku', $idbuku)->first();
         $data['categories'] = $this->categories->findAll();
-        return view('dashboard_edit_book', $data);
+        return view('viewAdmin/dashboard_edit_book', $data);
     }
 
     public function confirmUpdate($idbuku)
@@ -191,7 +191,7 @@ class Book extends BaseController
 
                 $fileName = $file->getRandomName();
 
-                $file->move(ROOTPATH . 'public/uploads/', $fileName);
+                $file->move(ROOTPATH . 'public_html/uploads/', $fileName);
 
                 $data = [
                     'isbn' => $this->request->getPost('isbn'),
@@ -250,7 +250,7 @@ class Book extends BaseController
         if (count($data['books']) > 5) {
             $data['books'] = array_slice($data['books'], 0, 5);
         }
-        return view('table_two_collumn', $data);
+        return view('viewAdmin/table_two_collumn', $data);
     }
 
     public function ajaxAddNewCategory()

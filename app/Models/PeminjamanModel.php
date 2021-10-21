@@ -27,4 +27,23 @@ class PeminjamanModel extends Model
 
         return $rows;
     }
+
+    public function insertBorrowedBook($idtransaksi, $nim, $idpetugas, $books)
+    {
+        $this->db->transBegin();
+
+        $this->db->query('INSERT INTO peminjaman (idtransaksi, nim, tgl_pinjam, total_denda, idpetugas) VALUES ('.$idtransaksi.', '.$nim.', NOW(), 0, '.$idpetugas.') ');
+        
+        foreach ($books as $id){
+            $this->db->query('INSERT INTO detail_transaksi (idtransaksi, idbuku, tgl_kembali, denda) VALUES ('.$idtransaksi.', '.$id.', NULL, 0) ');
+            $this->db->query('UPDATE buku SET stok_tersedia = stok_tersedia - 1 WHERE idbuku = ' . $id);
+        }
+
+        if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
+        } else {
+            $this->db->transCommit();
+        }
+        // test
+    }
 }

@@ -32,10 +32,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'epiz_29781334_perpus_db',
+        'hostname' => 'localhost',
+        'username' => 'id17806704_root',
+        'password' => 'rrW7)PunoT^opQ)t)HJO',
+        'database' => 'id17806704_epiz_29781334_perpus_db',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => true,
