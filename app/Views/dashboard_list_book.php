@@ -135,7 +135,7 @@
                                                                             <i class="bx bx-x d-block d-sm-none"></i>
                                                                             <span class="d-none d-sm-block">Close</span>
                                                                         </button>
-                                                                        <a href="" class="btn btn-danger ml-1" data-bs-dismiss="modal">
+                                                                        <a href="#" class="btn btn-danger ml-1" onclick="<?= 'ajaxDeleteCategory(' . $category['idKategori'] . ')' ?>">
                                                                             <i class="bx bx-check d-block d-sm-none"></i>
                                                                             <span class="d-none d-sm-block">Confirm</span>
                                                                         </a>
@@ -193,7 +193,7 @@
             $.ajax({
                 url: "<?= base_url('/dashboard/list_deleted_books_by_category') ?>/" + idKategori,
                 success: function(data) {
-                    $('#'+ target).html(data);
+                    $('#' + target).html(data);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     alert('Error fecthing data');
@@ -288,6 +288,20 @@
                 url: "<?= base_url('/dashboard/edit_category') ?>/" + idKategori,
                 type: "POST",
                 data: $('#add-category-form').serialize(),
+                dataType: "JSON",
+                success: function(data) {
+                    location.reload()
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error updating data');
+                }
+            })
+        }
+
+        function ajaxDeleteCategory(idKategori) {
+            $.ajax({
+                url: "<?= base_url('/dashboard/delete_category') ?>/" + idKategori,
+                type: "POST",
                 dataType: "JSON",
                 success: function(data) {
                     location.reload()

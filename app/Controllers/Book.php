@@ -248,7 +248,7 @@ class Book extends BaseController
         $data['total'] = count($data['books']);
 
         if (count($data['books']) > 5) {
-            $data['books'] = array_slice($data['books'], 0, 4);
+            $data['books'] = array_slice($data['books'], 0, 5);
         }
         return view('table_two_collumn', $data);
     }
@@ -263,6 +263,13 @@ class Book extends BaseController
     public function ajaxEditCategory($idKategori)
     {
         $this->categories->update($idKategori, ['nama' => $this->request->getPost('kategori')]);
+
+        echo json_encode(array("status" => TRUE));
+    }
+
+    public function ajaxDeleteCategory($idKategori)
+    {
+        $this->categories->where('idKategori', $idKategori)->delete();
 
         echo json_encode(array("status" => TRUE));
     }
