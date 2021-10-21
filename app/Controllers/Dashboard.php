@@ -88,7 +88,7 @@ class Dashboard extends BaseController
             session()->setFlashdata('error', "Pilih buku yang dipinjam");
             return redirect()->back()->withInput();
         }
-        if (!count($books)<3){
+        if (count($books)>2){
             session()->setFlashdata('error', "Buku yang dipinjam maksimal 2 buku");
             return redirect()->back()->withInput();
         }
