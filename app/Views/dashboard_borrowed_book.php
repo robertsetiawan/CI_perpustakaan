@@ -29,6 +29,7 @@
     <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
 </head>
 
+<!-- Peminjaman -->
 <body>
     <div id="app">
         <?php $sub = "peminjaman";

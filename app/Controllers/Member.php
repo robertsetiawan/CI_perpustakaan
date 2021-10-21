@@ -17,14 +17,19 @@ class Member extends BaseController
 
     public function index()
     {
+        $session = session();
         $data = [
             'validation' => \Config\Services::validation()
         ];
 
-        return view('/login_member', $data);
+        if ($session->get('username') != null && session()->get('is_logged_in')) {
+            return redirect()->to('/dashboard_member');
+        } else {
+            return view('/viewMembers/login_member', $data);
+        }
     }
 
-    public function auth()
+    public function login()
     {
         //validation
 
@@ -42,17 +47,33 @@ class Member extends BaseController
                 $session_data = [
                     'username' => $member['nama'],
                     'id' => $member['nim'],
-                    'is_logged_in' => true
+                    'is_logged_in' => true,
+                    'is_admin' => false
                 ];
-                session()->set($session_data);
-                return redirect()->to('/index.html');
+                $session = session();
+                $session->set($session_data);
+                //session()->set($session_data);
+                return redirect()->to('/dashboard_member');
             } else {
-                session()->setFlashdata('error_login', 'Username atau password ditemukan');
+                session()->setFlashdata('error_login', 'Username atau password tidak ditemukan');
                 return redirect()->to('/member');
             }
         } else {
-            session()->setFlashdata('error_login', 'Username atau password ditemukan');
+            session()->setFlashdata('error_login', 'Username atau password tidak ditemukan');
             return redirect()->to('/member');
         }
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to('/');
+    }
+
+    public function removeMember($nim)
+    {
+        $this->memberModel->where('nim', $nim)->delete();
+        return redirect()->to('/dashboard/list_member');
     }
 }

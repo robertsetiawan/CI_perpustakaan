@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table Datatable Jquery - Mazer Admin Dashboard</title>
+    <title><?= (isset($title) ? $title : "Dashboard Anggota") ?></title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -31,9 +31,8 @@
 
 <body>
     <div id="app">
-
-        <?php $sub = "buku"; $side = "database"; ?>
-        <?php include('dashboard_sidebar.php'); ?>
+        <?php $side = "dashboard"; ?>
+        <?php include('dashboard_sidebar_member.php'); ?>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -45,16 +44,49 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Available Book</h3>
-                            <p class="text-subtitle text-muted">For user to check they list</p>
+                            <h3>Peminjaman</h3>
+                            <p class="text-subtitle text-muted">Buku yang anda pinjam</p>
                         </div>
-                        <div class="col-12 col-md-6 order-md-2 order-first">
-                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">List Book</li>
-                                </ol>
-                            </nav>
+                    </div>
+                </div>
+                
+                <section class="section">
+                <div class = "row">
+                    <?php if (count($peminjaman) > 0) : ?>
+                        <!-- Disini iterasi tiap card buku pinjaman -->
+                        <?php foreach ($peminjaman as $bukuPinjaman) : ?>
+                        <div class="col-xl-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><?= $bukuPinjaman['judul'] ?></h4>
+                                        <p class="card-text">
+                                            Anda meminjam buku ini dari tanggal <b><?= $bukuPinjaman['tgl_pinjam'] ?></b>
+                                            hingga tanggal <b><?= $bukuPinjaman['tgl_pinjam'] ?></b>. <br>Denda yang harus anda bayar: 
+                                            <b><?= $bukuPinjaman['total_denda'] ?></b>.
+                                        </p>
+                                    </div>
+                                    <img class="img-fluid w-90" src="/assets/images/faces/2.jpg" alt="Card image cap">
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <span>Pengarang: <?= $bukuPinjaman['pengarang'] ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach ?>
+                    <?php else : ?>
+                        <!-- Disini bila belum pinjam -->
+                        <h3>Belum meminjam buku</h3>
+                    <?php endif ?>
+                    </div>
+                </div>
+                </section>
+
+                <div class="page-title">
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-md-1 order-last">
+                            <h3>Database Buku</h3>
+                            <p class="text-subtitle text-muted">For user to check they list</p>
                         </div>
                     </div>
                 </div>
@@ -62,7 +94,7 @@
                 <!-- Basic Tables start -->
                 <section class="section">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between">
                             Jquery Datatable
                         </div>
                         <div class="card-body">
@@ -94,8 +126,6 @@
                                             <td><?= $book['stok_tersedia'] ?></td>
                                             <td>
                                                 <a href="#"><i class="bi bi-info-circle"></i></a>
-                                                <a href="#"><i class="bi bi-pencil"></i></a>
-                                                <a href="#"><i class="bi bi-trash"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>
@@ -123,6 +153,9 @@
     <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+    
     <script src="/assets/vendors/jquery/jquery.min.js"></script>
     <script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
@@ -133,6 +166,8 @@
     </script>
 
     <script src="/assets/js/mazer.js"></script>
+
+
 </body>
 
 </html>

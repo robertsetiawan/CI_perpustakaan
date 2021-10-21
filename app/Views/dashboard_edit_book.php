@@ -21,7 +21,6 @@
 
         <?php $sub = "buku"; $side = "database"; ?>
         <?php include('dashboard_sidebar.php'); ?>
-        
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -33,7 +32,7 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Add Book</h3>
+                            <h3>Edit Book</h3>
                             <p class="text-subtitle text-muted">Multiple form layout you can use</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
@@ -41,7 +40,7 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="<?= base_url('/dashboard') ?>">Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="<?= base_url('/dashboard/list_book') ?>">List Book</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Add Book</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit Book</li>
                                 </ol>
                             </nav>
                         </div>
@@ -57,13 +56,13 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form" method="POST" action="<?= base_url('/dashboard/add_book/new') ?>" enctype="multipart/form-data">
+                                        <form class="form" method="POST" action="<?= base_url('/dashboard/edit_book/' . $book['idbuku'] . '/save') ?>" enctype="multipart/form-data">
                                             <?= csrf_field(); ?>
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="isbn">ISBN</label>
-                                                        <input type="text" id="isbn" class="form-control" placeholder="ISBN" name="isbn" value="<?= old('isbn') ?>">
+                                                        <label for="isbn">ISBN: <?= $book['isbn'] ?></label>
+                                                        <input style="display: none;" type="text" id="isbn" class="form-control" placeholder="ISBN" name="isbn" value="<?= !empty(old('isbn')) ? old('isbn') : $book['isbn'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_isbn'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_isbn') ?></div>
                                                         <?php endif; ?>
@@ -72,7 +71,7 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="judul">Judul Buku</label>
-                                                        <input type="text" id="judul" class="form-control" placeholder="Judul Buku" name="judul" value="<?= old('judul') ?>">
+                                                        <input type="text" id="judul" class="form-control" placeholder="Judul Buku" name="judul" value="<?= !empty(old('judul')) ? old('judul') : $book['judul'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_judul'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_judul') ?></div>
                                                         <?php endif; ?>
@@ -81,7 +80,7 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="pengarang">Pengarang</label>
-                                                        <input type="text" id="pengarang" class="form-control" placeholder="Nama Pengarang" name="pengarang" value="<?= old('pengarang') ?>">
+                                                        <input type="text" id="pengarang" class="form-control" placeholder="Nama Pengarang" name="pengarang" value="<?= !empty(old('pengarang')) ? old('pengarang') : $book['pengarang'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_pengarang'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_pengarang') ?></div>
                                                         <?php endif; ?>
@@ -90,7 +89,7 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="penerbit">Penerbit</label>
-                                                        <input type="text" id="penerbit" class="form-control" name="penerbit" placeholder="Penerbit" value="<?= old('penerbit') ?>">
+                                                        <input type="text" id="penerbit" class="form-control" name="penerbit" placeholder="Penerbit" value="<?= !empty(old('penerbit')) ? old('penerbit') : $book['penerbit'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_penerbit'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_penerbit') ?></div>
                                                         <?php endif; ?>
@@ -99,7 +98,7 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="kota-terbit">Kota Terbit</label>
-                                                        <input type="text" id="kota-terbit" class="form-control" name="kota_terbit" placeholder="Kota Terbit" value="<?= old('kota_terbit') ?>">
+                                                        <input type="text" id="kota-terbit" class="form-control" name="kota_terbit" placeholder="Kota Terbit" value="<?= !empty(old('kota_terbit')) ? old('kota_terbit') : $book['kota_terbit'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_kota_terbit'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_kota_terbit') ?></div>
                                                         <?php endif; ?>
@@ -108,7 +107,7 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="editor">Editor</label>
-                                                        <input type="text" id="editor" class="form-control" name="editor" placeholder="Nama Editor" value="<?= old('editor') ?>">
+                                                        <input type="text" id="editor" class="form-control" name="editor" placeholder="Nama Editor" value="<?= !empty(old('editor')) ? old('editor') : $book['editor'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_editor'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_editor') ?></div>
                                                         <?php endif; ?>
@@ -120,30 +119,29 @@
                                                         <select class="form-select" aria-label="Default select example" id="pilih-kategori" name="idkategori">
                                                             <?php if (!empty($categories)) : ?>
                                                                 <?php foreach ($categories as $category) : ?>
-                                                                    <?php if (old('idkategori') == $category['idKategori']) : ?>
-                                                                        <?php echo '<option value="' . $category['idKategori'] . '" selected>' . $category['nama'] . '</option>' ?>
+                                                                    <?php if (!empty(old('kategori'))) : ?>
+                                                                        <?php if (old('idkategori') == $category['idKategori']) : ?>
+                                                                            <?php echo '<option value="' . $category['idKategori'] . '" selected>' . $category['nama'] . '</option>' ?>
+                                                                        <?php else : ?>
+                                                                            <option value="<?= $category['idKategori'] ?>"><?= $category['nama'] ?></option>
+                                                                        <?php endif ?>
                                                                     <?php else : ?>
-                                                                        <option value="<?= $category['idKategori'] ?>"><?= $category['nama'] ?></option>
+                                                                        <?php if ($book['idkategori'] == $category['idKategori']) : ?>
+                                                                            <?php echo '<option value="' . $category['idKategori'] . '" selected>' . $category['nama'] . '</option>' ?>
+                                                                        <?php else : ?>
+                                                                            <option value="<?= $category['idKategori'] ?>"><?= $category['nama'] ?></option>
+                                                                        <?php endif ?>
                                                                     <?php endif ?>
+
                                                                 <?php endforeach ?>
                                                             <?php endif ?>
-                                                            <option value="lainnya">Lainnya</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="input-kategori">Input Kategori (jika pilihan belum tersedia)</label>
-                                                        <input type="text" id="input-kategori" class="form-control" name="input-kategori" placeholder="Kategori Buku">
-                                                        <?php if (!empty(session()->getFlashdata('error_idkategori'))) : ?>
-                                                            <div class="text-danger"><?= session()->getFlashdata('error_idkategori') ?></div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
                                                         <label for="stok">Stok Buku</label>
-                                                        <input type="number" id="stok" class="form-control" name="stok" placeholder="Stok Buku" value="<?= old('stok') ?>">
+                                                        <input type="number" id="stok" class="form-control" name="stok" placeholder="Stok Buku" value="<?= !empty(old('stok')) ? old('stok') : $book['stok'] ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_stok'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_stok') ?></div>
                                                         <?php endif; ?>
@@ -152,8 +150,8 @@
                                                 <div class="col-12 col-md-6">
                                                     <div class="form-group">
                                                         <label for="gambar-buku">Gambar Buku</label>
-                                                        <p>Jenis File Image: png, jpg, atau jpeg. Maksimal ukuran file 2 mb
-                                                        </p>
+                                                        <p>Gambar Sebelumnya: <a href="<?= base_url('/uploads/' . $book['file_gambar']) ?>" target="_blank" rel="noopener noreferrer">Click to preview</a></p>
+                                                        <p>Jenis File Image: png, jpg, atau jpeg. Maksimal ukuran file 2 mb</p>
                                                         <input type="file" id="gambarbuku" name="gambarbuku" class="form-control" accept="image/*" value="<?= old('gambarbuku') ?>">
                                                         <?php if (!empty(session()->getFlashdata('error_image_1'))) : ?>
                                                             <div class="text-danger"><?= session()->getFlashdata('error_image_1') ?></div><br>
@@ -167,7 +165,7 @@
                                     </div>
 
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Update</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                     </div>
                                 </div>
