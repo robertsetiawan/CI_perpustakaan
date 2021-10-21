@@ -5,11 +5,6 @@ use App\Models\MemberModel;
 
 class Register extends BaseController
 {
-    public function index()
-    {
-        return view('vw_register');
-    }
-
     public function process()
     {
         if (!$this->validate([

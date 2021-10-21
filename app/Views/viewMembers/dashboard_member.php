@@ -61,9 +61,8 @@
                                     <div class="card-body">
                                         <h4 class="card-title"><?= $bukuPinjaman['judul'] ?></h4>
                                         <p class="card-text">
-                                            Anda meminjam buku ini dari tanggal <b><?= $bukuPinjaman['tgl_pinjam'] ?></b>
-                                            hingga tanggal <b><?= $bukuPinjaman['tgl_pinjam'] ?></b>. <br>Denda yang harus anda bayar: 
-                                            <b><?= $bukuPinjaman['total_denda'] ?></b>.
+                                            Anda meminjam buku ini dari tanggal <b><?= $bukuPinjaman['tgl_pinjam'] ?></b>. <br>Denda yang harus anda bayar: 
+                                            <b><?= 'Rp' .$bukuPinjaman['total_denda'] ?></b>.
                                         </p>
                                     </div>
                                     <img class="img-fluid w-90" src="/assets/images/faces/2.jpg" alt="Card image cap">
