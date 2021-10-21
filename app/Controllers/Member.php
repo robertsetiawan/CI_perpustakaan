@@ -22,7 +22,7 @@ class Member extends BaseController
             'validation' => \Config\Services::validation()
         ];
 
-        if ($session->get('username') != null) {
+        if ($session->get('username') != null && session()->get('is_logged_in')) {
             return redirect()->to('/dashboard_member');
         } else {
             return view('/viewMembers/login_member', $data);
