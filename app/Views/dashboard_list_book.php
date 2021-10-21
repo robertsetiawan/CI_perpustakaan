@@ -273,13 +273,13 @@
             if ($('#kategori').val() == "") {
                 $('#kategori').val(name);
                 $('#kategori').attr("placeholder", "Edit " + name)
-                $(id).remove();
+                $('#' + id).remove();
                 $('#add-category-button').text('Edit');
-                $('#add-category-button').click(function() {
+                document.getElementById('add-category-button').onclick = function() {
                     if ($('#kategori').val() != "") {
                         ajaxEditCategory(id);
                     }
-                });
+                }
             }
         }
 
