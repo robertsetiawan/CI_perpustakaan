@@ -108,7 +108,7 @@
                             <h4>Popular Books</h4>
                         </div>
                         <div class="card-body">
-                                <div class = "row">
+                                <div class = "row match-height">
                                     <?php if (count($books) > 0) :?>
                                         <!-- Disini iterasi tiap card buku pinjaman -->
                                         <?php
