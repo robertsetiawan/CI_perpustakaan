@@ -276,7 +276,9 @@
                 $('#' + id).remove();
                 $('#add-category-button').text('Edit');
                 document.getElementById('add-category-button').onclick = function() {
-                    ajaxEditCategory(id);
+                    if ($('#kategori').val() != "") {
+                        ajaxEditCategory(id);
+                    }
                 }
             }
         }
