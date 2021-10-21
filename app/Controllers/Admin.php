@@ -24,7 +24,7 @@ class Admin extends BaseController
     public function index()
     {
         // return view('login_admin', ['title' => 'PERPUS|Login Admin']);
-        return view('auth-login');
+        return view('viewAdmin/auth-login');
     }
 
     public function register()

@@ -17,7 +17,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Admin');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -42,13 +42,17 @@ $routes->group('admin', function ($routes) {
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
     $routes->get('list_available_book', 'Book::ajaxGetAvailableBookFromDatabase', ['filter' => 'auth']);
-    $routes->get('borrowed_book', 'Dashboard::getBorrowedBook', ['filter' => 'auth']);
-    $routes->get('borrowed_book/add', 'Dashboard::addBorrowedBook', ['filter' => 'auth']);
-    $routes->add('borrowed_book/process', 'Dashboard::processBorrowedBook', ['filter' => 'auth']);
+    // $routes->get('borrowed_book', 'Dashboard::getBorrowedBook', ['filter' => 'auth']);
+    $routes->get('borrowed_book', 'Peminjaman::getBorrowedBook', ['filter' => 'auth']);
+    // $routes->get('borrowed_book/add', 'Dashboard::addBorrowedBook', ['filter' => 'auth']);
+    $routes->get('borrowed_book/add', 'Peminjaman::addBorrowedBook', ['filter' => 'auth']);
+    // $routes->add('borrowed_book/process', 'Dashboard::processBorrowedBook', ['filter' => 'auth']);
+    $routes->add('borrowed_book/process', 'Peminjaman::processBorrowedBook', ['filter' => 'auth']);
     // $routes->get('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3'); // new
-    $routes->PUT('return_book/(:segment)/(:segment)/(:any)', 'Dashboard::updatePengembalian/$1/$2/$3', ['filter' => 'auth']);
-    $routes->get('returned_book', 'Dashboard::getReturnedBook', ['filter' => 'auth']);
-    
+    $routes->PUT('return_book/(:segment)/(:segment)/(:any)', 'Transaksi::updatePengembalian/$1/$2/$3', ['filter' => 'auth']);
+    // $routes->get('returned_book', 'Dashboard::getReturnedBook', ['filter' => 'auth']);
+    $routes->get('returned_book', 'Transaksi::getReturnedBook', ['filter' => 'auth']);
+
     $routes->get('list_book', 'Book::getCategoryFromDatabase', ['filter' => 'auth']);
     $routes->get('add_book', 'Book::addBook', ['filter' => 'auth']);
     $routes->add('add_book/new', 'Book::newBook', ['filter' => 'auth']);
@@ -56,15 +60,15 @@ $routes->group('dashboard', function ($routes) {
     $routes->get('edit_book/(:any)', 'Book::editBook/$1', ['filter' => 'auth']);
     $routes->get('delete_book/(:segment)/confirm', 'Book::deleteBook/$1', ['filter' => 'auth']);
     $routes->add('edit_book/(:segment)/save', 'Book::confirmUpdate/$1', ['filter' => 'auth']);
-    $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
-    $routes->get('member/register', 'Register::index', ['filter' => 'auth']);
+    // $routes->get('list_member', 'Dashboard::getAllMembersFromDatabase', ['filter' => 'auth']);
+    $routes->get('list_member', 'Member::getAllMembersFromDatabase', ['filter' => 'auth']);
+    // $routes->get('member/register', 'Register::index', ['filter' => 'auth']);
     $routes->add('member/register/process', 'Register::process', ['filter' => 'auth']);
     $routes->add('member/delete/(:segment)', 'Member::removeMember/$1', ['filter' => 'auth']);
     $routes->add('add_category', 'Book::ajaxAddNewCategory', ['filter' => 'auth']);
     $routes->add('edit_category/(:any)', 'Book::ajaxEditCategory/$1', ['filter' => 'auth']);
     $routes->add('delete_category/(:any)', 'Book::ajaxDeleteCategory/$1', ['filter' => 'auth']);
     $routes->get('list_book_by_category/(:any)', 'Book::ajaxGetAllBookFromDatabase/$1', ['filter' => 'auth']);
-  
 });
 $routes->get('/member', 'Member::index');
 $routes->get('/dashboard_member', 'DashboardMember::index', ['filter' => 'authmember']);

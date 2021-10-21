@@ -179,6 +179,10 @@
     <script>
         $(function() {
             ajaxGetAllBookFromDatabaseByIdKategori()
+
+            $('#add-category-form').submit(function(){
+                event.preventDefault();
+            })
         });
 
         $("#pilih-kategori").change(function() {
