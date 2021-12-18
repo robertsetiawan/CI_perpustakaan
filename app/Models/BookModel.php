@@ -47,7 +47,7 @@ class BookModel extends Model
 
     public function getAvailableBookAndCategory()
     {
-        $query = $this->db->query("SELECT * FROM buku b INNER JOIN kategori k ON b.idkategori = k.idKategori WHERE b.stok_tersedia > 0;");
+        $query = $this->db->query("SELECT b.*, k.nama FROM buku b INNER JOIN kategori k ON b.idkategori = k.idKategori WHERE b.stok_tersedia > 0;");
 
         return $query->getResultArray();
     }

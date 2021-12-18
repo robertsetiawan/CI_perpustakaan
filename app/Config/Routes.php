@@ -39,6 +39,9 @@ $routes->group('admin', function ($routes) {
     $routes->get('logout', 'Admin::logout');
 });
 
+$routes->get('/api/v1/books', 'api/v1/Books::index');
+$routes->post('/api/v1/borrowed-books', 'api/v1/Books::getBorrowedBook');
+
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->group('dashboard', function ($routes) {
     $routes->get('list_available_book', 'Book::ajaxGetAvailableBookFromDatabase', ['filter' => 'auth']);

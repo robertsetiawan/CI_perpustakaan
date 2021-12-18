@@ -37,12 +37,12 @@ CI_ENVIRONMENT = production
 # DATABASE
 #--------------------------------------------------------------------
 
- database.default.hostname = localhost
- database.default.database = epiz_29781334_perpus_db
- database.default.username = root
- database.default.password = 
- database.default.DBDriver = MySQLi
- database.default.DBPrefix =
+#  database.default.hostname = localhost
+#  database.default.database = epiz_29781334_perpus_db
+#  database.default.username = root
+#  database.default.password = 
+#  database.default.DBDriver = MySQLi
+#  database.default.DBPrefix =
 
 
 # database.tests.hostname = localhost
